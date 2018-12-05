@@ -1,27 +1,10 @@
-#classes and subclasses to import
 import cv2
 import numpy as np
 import os
 
 
 filename = 'results1B_3686.csv'
-#################################################################################################
-# DO NOT EDIT!!!
-#################################################################################################
-#subroutine to write results to a csv
-def writecsv(color,shape,cx,cy):
-    global filename
-    #open csv file in append mode
-    filep = open(filename,'a')
-    # create string data to write per image
-    datastr = "," + color + "-" + shape + "-" + str(cx) + "-" + str(cy)
-    #write to csv
-    filep.write(datastr)
-    filep.close()
 
-#################################################################################################
-# DO NOT EDIT!!!
-#################################################################################################
 def blend_transparent(face_img, overlay_t_img):
     # Split out the transparency mask from the colour info
     overlay_img = overlay_t_img[:,:,:3] # Grab the BRG planes
@@ -46,12 +29,11 @@ def blend_transparent(face_img, overlay_t_img):
 def main(video_file):
 
     cap = cv2.VideoCapture(video_file)
-    image_red = cv2.imread("yellow_flower.png",-1)
-    image_blue = cv2.imread("pink_flower.png",-1)
-    image_green = cv2.imread("red_flower.png",-1)
+    image_red = cv2.imread("video_files/yellow_flower.jpeg",-1)
+    image_blue = cv2.imread("video_files/pink_flower.jpeg",-1)
+    image_green = cv2.imread("video_files/red_flower.jpeg",-1)
 
-#####################################################################################################
-    square=cv2.imread('C:/Users/adsvi/Desktop/square.png')
+    square=cv2.imread('./input_images/square.jpg')
     square_gray=cv2.cvtColor(square,cv2.COLOR_BGR2GRAY)
     ret,square_thresh=cv2.threshold(square_gray,100,255,0)
     img1,contours_square,heirarchy=cv2.findContours(square_thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
@@ -204,19 +186,6 @@ def main(video_file):
     cap.release()
     out.release()
     cv2.destroyAllWindows()
-    def callcsv(shapes):
-        for element in shapes:
-            colour,shape,cx,cy=element
-            writecsv(colour,shape,cx,cy)
-        outputfile=open(filename,'a')
-        outputfile.write('\n\n')
-        outputfile.close()
 
-    callcsv(greenshapes);callcsv(redshapes);callcsv(blueshapes)
-
-#################################################################################################
-# DO NOT EDIT!!!
-#################################################################################################
-#main where the path is set for the directory containing the test images
 if __name__ == "__main__":
     main(os.path.abspath("Video.mp4"))
